@@ -13,6 +13,7 @@ gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 
+gem 'thor', '0.19.1'
 
 
 # Use jquery as the JavaScript library
