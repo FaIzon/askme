@@ -2,6 +2,8 @@ require 'openssl'
 
 class User < ApplicationRecord
 
+  attr_accessor :password
+
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
   ##Relations
@@ -10,13 +12,15 @@ class User < ApplicationRecord
   ##Validates
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
-
-  attr_accessor :password
-
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
+  validates_format_of :email, with: /@/
+  validates_format_of :username, with: /\A[a-zA-Z0-9_]+\z/
+  validates_length_of :username, maximum: 40
 
+  ##Callbacks
   before_save :encrypt_password
+  before_validation { self.username.downcase! }
 
   def encrypt_password
     if self.password.present?
