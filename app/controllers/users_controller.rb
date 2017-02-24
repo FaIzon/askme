@@ -28,6 +28,7 @@ class UsersController < ApplicationController
       Question.new(text: 'Как погода?', created_at: Date.parse('27.03.2016')),
       Question.new(text: 'Отмечаем?', created_at: Date.parse('27.03.2016')),
     ]
+    # @questions = []
 
     # Болванка пользователя
     @user = User.new(

@@ -14,15 +14,19 @@
   <div class="user-ask-button container text-center">
     <%= link_to "Спроси меня", '', class: 'button button-light', id: 'ask-button' %>
   </div>
-  <%= declension_of_word(@user.questions.size, ['вопрос','вопроса','вопросов'])  %>
+  <% if @user.questions.size >= 0 %>
+    <%= declension_of_word(@user.questions.size, ['вопрос', 'вопроса', 'вопросов']) %>
+  <% else %>
+    <%= "0 вопросов" %>
+  <% end %>
 </div>
 
 <div class="user-question-form-div column-1-4 column-1-4-right" id='ask-form'>
   <div class="user-question-form buffer-both">
     <div class="form">
-    
+      
       <%= form_for @new_question do |f| %>
-   
+        
         <%= f.hidden_field :user_id %>
         
         <div class="form-field">
