@@ -14,7 +14,7 @@
   <div class="user-ask-button container text-center">
     <%= link_to "Спроси меня", '', class: 'button button-light', id: 'ask-button' %>
   </div>
-  <% if @user.questions.size >= 0 %>
+  <% if @user.questions.size > 0 %>
     <%= declension_of_word(@user.questions.size, ['вопрос', 'вопроса', 'вопросов']) %>
   <% else %>
     <%= "0 вопросов" %>
