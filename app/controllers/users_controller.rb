@@ -1,44 +1,63 @@
 class UsersController < ApplicationController
+
+  before_action :load_user, except: [:index, :create, :new]
+
+  # проверяем имеет ли юзер доступ к экшену
+  before_action :authorize_user, except: [:index, :new, :create, :show]
+
   def index
-    # который создает модель, не записывая её в базу
-    @users = [
-      User.new(
-        id: 1,
-        name: 'Ivan',
-        username: 'ivanko',
-        avatar_url: ''
-      ),
-      User.new(
-        id: 2,
-        name: 'Petr',
-        username: 'petrenko'
-      )
-    ]
+    @users = User.all
   end
 
   def new
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new
+  end
+
+  def create
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_url, notice: 'Пользователь успешно зарегестрирован!'
+    else
+      render 'new'
+    end
   end
 
   def edit
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Данные обновлены'
+    else
+      render 'edit'
+    end
+  end
+
   def show
-    # Болванка вопросов для пользователя
-    @questions = [
-      Question.new(text: 'Как погода?', created_at: Date.parse('27.03.2016')),
-      Question.new(text: 'Отмечаем?', created_at: Date.parse('27.03.2016')),
-    ]
-    # @questions = []
+    @questions = @user.questions.order(created_at: :desc)
 
-    # Болванка пользователя
-    @user = User.new(
-      name: 'Ivan',
-      username: 'ivanko',
-      questions: @questions
-    )
+    @new_question = @user.questions.build
+  end
 
-    # Болванка для нового вопроса
-    @new_question = Question.new
+  private
 
+  # если загруженный из базы юзер и текущий залогиненный не совпадают - посылаем его
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  # загружаем из базы запрошенного юзера
+  def load_user
+    @user ||= User.find params[:id]
+  end
+
+  # явно задаем список разрешенных параметров для модели user
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation,
+                                 :name, :username, :avatar_url)
   end
 end
