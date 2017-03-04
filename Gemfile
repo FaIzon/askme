@@ -11,6 +11,7 @@ gem 'rails', '~> 5.0.1'
 gem 'puma', '~> 3.0'
 
 gem 'thor', '0.19.1'
+gem 'russian'
 
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'

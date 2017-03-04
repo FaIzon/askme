@@ -11,6 +11,10 @@ module ApplicationHelper
     content_tag 'span', '', class: "fa fa-#{icon_class}"
   end
 
+  def count_questions
+    I18n.t('question', count: @questions.count)
+  end
+
   def declension_of_word(number, array_words, with_number = true)
     number = 0 if (number == nil || !number.is_a?(Numeric))
 
