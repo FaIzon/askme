@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # метод-помощник, доступный во вьюхах
-  helper_method :current_user
+  helper_method :current_user, :background_color
 
   private
 
