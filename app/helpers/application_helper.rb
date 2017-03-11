@@ -11,6 +11,10 @@ module ApplicationHelper
     content_tag 'span', '', class: "fa fa-#{icon_class}"
   end
 
+  def background_color
+    @background_color = @user.background_color if @user.present?
+  end
+
   def count_questions
     I18n.t('question', count: @questions.count)
   end

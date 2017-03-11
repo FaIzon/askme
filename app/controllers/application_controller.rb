@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # метод-помощник, доступный во вьюхах
-  helper_method :current_user, :background_color
+  helper_method :current_user
 
   private
 
@@ -15,5 +15,4 @@ class ApplicationController < ActionController::Base
   def reject_user
     redirect_to root_path, alert: 'Вам сюда низя!'
   end
-
 end
