@@ -19,25 +19,19 @@ module ApplicationHelper
     I18n.t('question', count: @questions.count)
   end
 
-  def declension_of_word(number, array_words, with_number = true)
-    number = 0 if (number == nil || !number.is_a?(Numeric))
+  def sklonenie(number, krokodil, krokodila, krokodilov)
+    ostatok_10 = number % 10
+    ostatok_100 = number % 100
 
-    prefix = ""
-    prefix = "#{number.to_s} " if with_number
+    return krokodilov if (11..14).include?(ostatok_100)
 
-    remainder = number % 10
-    remainder100 = number % 100
-
-    if (remainder100 >= 11 && remainder100 <= 14)
-      return "#{prefix}#{array_words[2]}"
-    end
-
-    if remainder == 1
-      return "#{prefix}#{array_words[0]}"
-    elsif remainder >= 2 && remainder <= 4
-      return "#{prefix}#{array_words[1]}"
-    else
-      return "#{prefix}#{array_words[2]}"
+    case ostatok_10
+      when 1
+        krokodil
+      when (2..4)
+        krokodila
+      else
+        krokodilov
     end
   end
 end
