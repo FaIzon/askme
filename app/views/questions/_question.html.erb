@@ -6,6 +6,12 @@
 
 <div class="question">
   <div class="question-content">
+    <% if question.questioning_user.present? %>
+      Вопрос от пользователя: <%= link_to "@#{question.questioning_user.username}",
+                                          user_path(question.questioning_user) %>
+    <% else %>
+      Вопрос от анонима:
+    <% end %>
     <div class="question-text text-lead">
       <%= question.text %>
     </div>
@@ -28,7 +34,7 @@
     <div class="question-actions">
       <%= link_to fa_icon(action_icon), edit_question_path(question) %>
       <%= link_to fa_icon('trash-o'), question_path(question),
-                  method: :delete, data: {confirm: 'Точно удалить вопрос?'} %>
+                  method: :delete, data: { confirm: 'Точно удалить вопрос?' } %>
     </div>
   <% end %>
 </div>
